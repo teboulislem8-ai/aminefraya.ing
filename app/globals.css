@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+:root {
+  --g: #2D6A4F;
+  --g-lt: #4A9B74;
+  --g-pale: #EAF3DE;
+  --gold: #C9963A;
+  --gold-pale: #FAEEDA;
+  --sky: #5BAEC7;
+  --sky-pale: #E6F1FB;
+  --red: #A32D2D;
+  --red-pale: #FCEBEB;
+  --red-border: #F09595;
+  --purple-pale: #E6D9F7;
+  --purple: #5B2D8E;
+  --text: #1A2E1A;
+  --text2: #5F6B5F;
+  --text3: #9CA89C;
+  --bg: #FFFFFF;
+  --bg2: #F8F5F0;
+  --bg3: #F0EDE8;
+  --border: #E4E0DA;
+  --border2: #D0CCC6;
+  --font: 'Segoe UI', Tahoma, Arial, sans-serif;
+  --mono: 'Courier New', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); color: var(--text); background: var(--bg); direction: rtl; }
+a { color: inherit; text-decoration: none; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+.fade-in { animation: fadeIn 0.3s ease; }
+.section-sep { font-size:11px;letter-spacing:.1em;color:var(--gold);font-weight:600;text-transform:uppercase;margin-bottom:.8rem; }
+.mol-badge { font-size:10px;padding:2px 7px;border-radius:8px;background:var(--purple-pale);color:var(--purple); }
+.badge-active { background:var(--g-pale);color:#27500A;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500; }
+.badge-inactive { background:var(--bg2);color:var(--text3);font-size:10px;padding:2px 8px;border-radius:10px; }
+.progress-bar { height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-bottom:.8rem; }
+.progress-fill { height:100%;background:var(--g);border-radius:2px;transition:width .3s; }
+.wa-float { position:fixed;bottom:22px;right:22px;background:#25D366;color:white;border:none;border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.2);z-index:200;cursor:pointer; }
+.wa-float:hover{background:#1ebe5d;}
+.f-label { display:block;font-size:11px;color:var(--text2);margin-bottom:3px;font-weight:500; }
+.f-input { width:100%;padding:8px 12px;border:.5px solid var(--border2);border-radius:6px;font-size:13px;background:var(--bg2);color:var(--text);direction:rtl;font-family:var(--font); }
+.f-input:focus { outline:none;border-color:var(--g); }
