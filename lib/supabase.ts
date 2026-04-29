@@ -24,6 +24,7 @@ export interface Client {
   id: string
   name: string
   phone: string
+  email?: string
   region: string
   type: string
   notes: string
