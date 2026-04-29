@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+
 import {
   getOwnerSettings, updateOwnerSettings,
   getClients, createClient_db, updateClient_db, deleteClient_db, generateCode,
@@ -14,6 +15,9 @@ import {
   type Client, type Post, type ChecklistItem, type Notification,
   type CalendarEvent, type Order, type Article, type OwnerSettings
 } from '@/lib/supabase'
+
+import * as XLSX from 'xlsx'
+
 
 const MONTHS_AR = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر']
 const DAYS_AR = ['أحد', 'اثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت']
