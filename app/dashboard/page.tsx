@@ -149,7 +149,40 @@ export default function DashboardPage() {
   const delClient = async (id: string) => { await deleteClient_db(id); const { data } = await getClients(); if (data) setClients(data); showToast('تم حذف العميل') }
   const regenCode = async (c: Client) => { const code = generateCode(); await updateClient_db(c.id, { code }); const { data } = await getClients(); if (data) setClients(data); showToast('تم توليد رمز جديد: ' + code) }
   const shareWA = (name: string, code: string) => { const msg = encodeURIComponent(`السلام عليكم ${name}،\nرمز دخولك لبوابة aminefraya.ing:\n\n🔑 ${code}\n\nادخل الرمز في الموقع.`); window.open('https://wa.me/213774182227?text=' + msg, '_blank') }
-
+const importExcel = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0]
+  if (!file) return
+  setImporting(true)
+  const reader = new FileReader()
+  reader.onload = async (evt) => {
+    const data = evt.target?.result
+    const wb = XLSX.read(data, { type: 'binary' })
+    const ws = wb.Sheets[wb.SheetNames[0]]
+    const rows = XLSX.utils.sheet_to_json(ws) as Record<string, string>[]
+    let count = 0
+    for (const row of rows) {
+      const name = row['الاسم'] || row['name'] || ''
+      if (!name.trim()) continue
+      const code = generateCode()
+      await createClient_db({
+        name: name.trim(),
+        phone: (row['الهاتف'] || row['phone'] || '').trim(),
+        region: (row['الولاية'] || row['region'] || '').trim(),
+        type: (row['نوع النشاط'] || row['type'] || 'زراعة حبوب').trim(),
+        notes: '',
+        status: (row['الحالة'] || row['status'] || 'active').trim() as 'active' | 'inactive',
+        code
+      })
+      count++
+    }
+    const { data: cd } = await getClients()
+    if (cd) setClients(cd)
+    setImporting(false)
+    showToast(`تم استيراد ${count} عميل ✔`)
+  }
+  reader.readAsBinaryString(file)
+  e.target.value = ''
+}
   const filteredClients = clients.filter(c => {
     const mq = !clSearch || c.name.toLowerCase().includes(clSearch) || c.phone.includes(clSearch)
     const ms = clStatusFilter === 'all' || c.status === clStatusFilter
@@ -343,10 +376,16 @@ export default function DashboardPage() {
           {/* CLIENTS */}
           {panel === 'clients' && (
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <div style={{ fontSize: 15, fontWeight: 600 }}>إدارة العملاء</div>
-                <button onClick={openAdd} style={BSave}>+ عميل جديد</button>
-              </div>
+              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'1rem'}}>
+  <div style={{fontSize:15,fontWeight:600}}>إدارة العملاء</div>
+  <div style={{display:'flex',gap:8}}>
+   <label style={{...BSave, opacity: importing ? 0.6 : 1, cursor:'pointer', display:'inline-flex', alignItems:'center', gap:4}}>
+      {importing ? 'جارٍ الاستيراد...' : '📥 استيراد Excel'}
+      <input type="file" accept=".xlsx,.xls" onChange={importExcel} style={{display:'none'}}/>
+    </label>
+    <button onClick={openAdd} style={BSave}>+ عميل جديد</button>
+  </div>
+</div>
               <div style={{ display: 'flex', gap: 8, marginBottom: '1rem', flexWrap: 'wrap' }}>
                 <input value={clSearch} onChange={e => setClSearch(e.target.value)} placeholder="ابحث بالاسم أو الهاتف..." style={{ ...FI, flex: 1, maxWidth: 260 }} />
                 <select value={clStatusFilter} onChange={e => setClStatusFilter(e.target.value)} style={FI}><option value="all">الكل</option><option value="active">نشط</option><option value="inactive">غير نشط</option></select>
