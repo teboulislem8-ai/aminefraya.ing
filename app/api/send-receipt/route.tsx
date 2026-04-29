@@ -118,29 +118,30 @@ export async function POST(req: Request) {
       />
     )
 
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: email,
-      subject: `Facture ${invoiceNumber}`,
-      html: `
-        <h2>Facture</h2>
-        <p>Bonjour ${clientName}</p>
-        <p>Veuillez trouver votre facture en pièce jointe.</p>
-      `,
-      attachments: [
-  {
-    filename: `facture-${invoiceNumber}.pdf`,
-    content: pdfBuffer.toString('base64')
-  }
-]
-    })
+    const result = await resend.emails.send({
+  from: 'onboarding@resend.dev',
+  to: email,
+  subject: `Facture ${invoiceNumber}`,
+  html: `
+    <h2>Facture</h2>
+    <p>Bonjour ${clientName}</p>
+    <p>Veuillez trouver votre facture en pièce jointe.</p>
+  `,
+  attachments: [
+    {
+      filename: `facture-${invoiceNumber}.pdf`,
+      content: pdfBuffer.toString('base64')
+    }
+  ]
+})
 
-    return NextResponse.json({ success: true })
-  } catch (error) {
-    console.error(error)
-    return NextResponse.json(
-      { error: 'Failed to send receipt' },
-      { status: 500 }
-    )
-  }
+console.log('RESEND RESULT:', result)
+
+return NextResponse.json({ success: true })
+} catch (error) {
+  console.error(error)
+  return NextResponse.json(
+    { error: 'Failed to send receipt' },
+    { status: 500 }
+  )
 }
