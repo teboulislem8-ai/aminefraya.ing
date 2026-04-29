@@ -43,6 +43,7 @@ export default function DashboardPage() {
   // UI
   const [panel, setPanel] = useState('overview')
   const [toast, setToast] = useState('')
+  const [importing, setImporting] = useState(false)
   // Data
   const [clients, setClients] = useState<Client[]>([])
   const [posts, setPosts] = useState<Post[]>([])
