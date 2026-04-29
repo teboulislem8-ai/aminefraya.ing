@@ -97,6 +97,8 @@ function InvoicePDF({
 
 export async function POST(req: Request) {
   try {
+    console.log("SEND RECEIPT API CALLED")
+
     const body = await req.json()
 
     const {
