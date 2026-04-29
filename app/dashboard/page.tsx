@@ -161,18 +161,18 @@ const importExcel = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const rows = XLSX.utils.sheet_to_json(ws) as Record<string, string>[]
     let count = 0
     for (const row of rows) {
-      const name = row['الاسم'] || row['name'] || ''
-      if (!name.trim()) continue
-      const code = generateCode()
-      await createClient_db({
-        name: name.trim(),
-        phone: (row['الهاتف'] || row['phone'] || '').trim(),
-        region: (row['الولاية'] || row['region'] || '').trim(),
-        type: (row['نوع النشاط'] || row['type'] || 'زراعة حبوب').trim(),
-        notes: '',
-        status: (row['الحالة'] || row['status'] || 'active').trim() as 'active' | 'inactive',
-        code
-      })
+   const name = String(row['الاسم'] ?? row['name'] ?? '').trim()
+if (!name) continue
+
+await createClient_db({
+  name,
+  phone: String(row['الهاتف'] ?? row['phone'] ?? '').trim(),
+  region: String(row['الولاية'] ?? row['region'] ?? '').trim(),
+  type: String(row['نوع النشاط'] ?? row['type'] ?? 'زراعة حبوب').trim(),
+  notes: '',
+  status: String(row['الحالة'] ?? row['status'] ?? 'active').trim() as 'active' | 'inactive',
+  code
+})
       count++
     }
     const { data: cd } = await getClients()
