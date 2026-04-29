@@ -809,8 +809,36 @@ date: new Date().toLocaleDateString()
             </div>
             <div style={{ padding: '1.2rem' }}>
               <div style={{ marginBottom: '.9rem' }}><label className="f-label">الاسم الكامل *</label><input value={cfName} onChange={e => setCfName(e.target.value)} placeholder="محمد بن علي" style={FI} /></div>
-              <div style={{ marginBottom: '.9rem' }}><label className="f-label">رقم الهاتف</label><input value={cfPhone} onChange={e => setCfPhone(e.target.value)} placeholder="+213 6XX XXX XXX" style={{ ...FI, direction: 'ltr', textAlign: 'right' }} /></div>
-              <div style={{ marginBottom: '.9rem' }}><label className="f-label">الولاية / المنطقة</label><input value={cfRegion} onChange={e => setCfRegion(e.target.value)} placeholder="قسنطينة..." style={FI} /></div>
+              <div style={{ marginBottom: '.9rem' }}>
+  <label className="f-label">رقم الهاتف</label>
+  <input
+    value={cfPhone}
+    onChange={e => setCfPhone(e.target.value)}
+    placeholder="+213 6XX XXX XXX"
+    style={{ ...FI, direction: 'ltr', textAlign: 'right' }}
+  />
+</div>
+
+<div style={{ marginBottom: '.9rem' }}>
+  <label className="f-label">البريد الإلكتروني</label>
+  <input
+    type="email"
+    value={cfEmail}
+    onChange={e => setCfEmail(e.target.value)}
+    placeholder="client@email.com"
+    style={FI}
+  />
+</div>
+
+<div style={{ marginBottom: '.9rem' }}>
+  <label className="f-label">الولاية / المنطقة</label>
+  <input
+    value={cfRegion}
+    onChange={e => setCfRegion(e.target.value)}
+    placeholder="قسنطينة..."
+    style={FI}
+  />
+</div>
               <div style={{ marginBottom: '.9rem' }}><label className="f-label">نوع النشاط</label><select value={cfType} onChange={e => setCfType(e.target.value)} style={FI}>{['زراعة حبوب', 'بستنة وخضروات', 'أشجار مثمرة', 'تربية مواشي', 'زراعة متنوعة'].map(t => <option key={t}>{t}</option>)}</select></div>
               <div style={{ marginBottom: '.9rem' }}><label className="f-label">ملاحظات</label><textarea value={cfNotes} onChange={e => setCfNotes(e.target.value)} placeholder="معلومات إضافية..." style={{ ...FI, height: 65, resize: 'none' }} /></div>
               <div style={{ marginBottom: '.9rem' }}><label className="f-label">الحالة</label><select value={cfStatus} onChange={e => setCfStatus(e.target.value as 'active' | 'inactive')} style={FI}><option value="active">نشط</option><option value="inactive">غير نشط</option></select></div>
