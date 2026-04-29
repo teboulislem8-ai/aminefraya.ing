@@ -131,24 +131,90 @@ export default function DashboardPage() {
   const unread = notifs.filter(n => !n.read).length
 
   // ── CLIENTS ─────────────────────────────────────────────
-  const openAdd = () => { setEditClient(null); setCfName(''); setCfPhone(''); setCfRegion(''); setCfType('زراعة حبوب'); setCfNotes(''); setCfStatus('active'); setNewCode(''); setShowClientModal(true) }
-  const openEdit = (c: Client) => { setEditClient(c); setCfName(c.name); setCfPhone(c.phone); setCfRegion(c.region); setCfType(c.type); setCfNotes(c.notes); setCfStatus(c.status); setNewCode(c.code); setShowClientModal(true) }
-  const saveClient = async () => {
-    if (!cfName.trim()) { showToast('الاسم مطلوب'); return }
-    if (editClient) {
-      await updateClient_db(editClient.id, { name: cfName, phone: cfPhone, region: cfRegion, type: cfType, notes: cfNotes, status: cfStatus })
-      showToast('تم تحديث بيانات العميل ✓')
-    } else {
-      const code = generateCode()
-      await createClient_db({ name: cfName, phone: cfPhone, region: cfRegion, type: cfType, notes: cfNotes, status: cfStatus, code })
-      setNewCode(code); showToast('تم إنشاء العميل ✓')
-    }
-    const { data } = await getClients(); if (data) setClients(data)
-    if (editClient) setShowClientModal(false)
+const openAdd = () => { 
+  setEditClient(null); 
+  setCfName(''); 
+  setCfPhone(''); 
+  setCfEmail('');
+  setCfRegion(''); 
+  setCfType('زراعة حبوب'); 
+  setCfNotes(''); 
+  setCfStatus('active'); 
+  setNewCode(''); 
+  setShowClientModal(true) 
+}
+
+const openEdit = (c: Client) => { 
+  setEditClient(c); 
+  setCfName(c.name); 
+  setCfPhone(c.phone); 
+  setCfEmail(c.email || '');
+  setCfRegion(c.region); 
+  setCfType(c.type); 
+  setCfNotes(c.notes); 
+  setCfStatus(c.status); 
+  setNewCode(c.code); 
+  setShowClientModal(true) 
+}
+
+const saveClient = async () => {
+  if (!cfName.trim()) { showToast('الاسم مطلوب'); return }
+
+  if (editClient) {
+    await updateClient_db(editClient.id, { 
+      name: cfName, 
+      phone: cfPhone, 
+      email: cfEmail,
+      region: cfRegion, 
+      type: cfType, 
+      notes: cfNotes, 
+      status: cfStatus 
+    })
+    showToast('تم تحديث بيانات العميل ✓')
+  } else {
+    const code = generateCode()
+    await createClient_db({ 
+      name: cfName, 
+      phone: cfPhone, 
+      email: cfEmail,
+      region: cfRegion, 
+      type: cfType, 
+      notes: cfNotes, 
+      status: cfStatus, 
+      code 
+    })
+    setNewCode(code); 
+    showToast('تم إنشاء العميل ✓')
   }
-  const delClient = async (id: string) => { await deleteClient_db(id); const { data } = await getClients(); if (data) setClients(data); showToast('تم حذف العميل') }
-  const regenCode = async (c: Client) => { const code = generateCode(); await updateClient_db(c.id, { code }); const { data } = await getClients(); if (data) setClients(data); showToast('تم توليد رمز جديد: ' + code) }
-  const shareWA = (name: string, code: string) => { const msg = encodeURIComponent(`السلام عليكم ${name}،\nرمز دخولك لبوابة aminefraya.ing:\n\n🔑 ${code}\n\nادخل الرمز في الموقع.`); window.open('https://wa.me/213774182227?text=' + msg, '_blank') }
+
+  setCfEmail('')
+
+  const { data } = await getClients(); 
+  if (data) setClients(data)
+
+  if (editClient) setShowClientModal(false)
+}
+
+const delClient = async (id: string) => { 
+  await deleteClient_db(id); 
+  const { data } = await getClients(); 
+  if (data) setClients(data); 
+  showToast('تم حذف العميل') 
+}
+
+const regenCode = async (c: Client) => { 
+  const code = generateCode(); 
+  await updateClient_db(c.id, { code }); 
+  const { data } = await getClients(); 
+  if (data) setClients(data); 
+  showToast('تم توليد رمز جديد: ' + code) 
+}
+
+const shareWA = (name: string, code: string) => { 
+  const msg = encodeURIComponent(`السلام عليكم ${name}،\nرمز دخولك لبوابة aminefraya.ing:\n\n🔑 ${code}\n\nادخل الرمز في الموقع.`); 
+  window.open('https://wa.me/213774182227?text=' + msg, '_blank') 
+}
+
 const importExcel = async (e: React.ChangeEvent<HTMLInputElement>) => {
   const file = e.target.files?.[0]
   if (!file) return
@@ -160,37 +226,43 @@ const importExcel = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const ws = wb.Sheets[wb.SheetNames[0]]
     const rows = XLSX.utils.sheet_to_json(ws) as Record<string, string>[]
     let count = 0
+
     for (const row of rows) {
- const name = String(row['الاسم'] ?? row['name'] ?? '').trim()
-if (!name) continue
+      const name = String(row['الاسم'] ?? row['name'] ?? '').trim()
+      if (!name) continue
 
-const code = generateCode()
+      const code = generateCode()
 
-await createClient_db({
-  name,
-  phone: String(row['الهاتف'] ?? row['phone'] ?? '').trim(),
-  region: String(row['الولاية'] ?? row['region'] ?? '').trim(),
-  type: String(row['نوع النشاط'] ?? row['type'] ?? 'زراعة حبوب').trim(),
-  notes: '',
-  status: String(row['الحالة'] ?? row['status'] ?? 'active').trim() as 'active' | 'inactive',
-  code
-})
+      await createClient_db({
+        name,
+        phone: String(row['الهاتف'] ?? row['phone'] ?? '').trim(),
+        email: String(row['البريد'] ?? row['email'] ?? '').trim(),
+        region: String(row['الولاية'] ?? row['region'] ?? '').trim(),
+        type: String(row['نوع النشاط'] ?? row['type'] ?? 'زراعة حبوب').trim(),
+        notes: '',
+        status: String(row['الحالة'] ?? row['status'] ?? 'active').trim() as 'active' | 'inactive',
+        code
+      })
+
       count++
     }
+
     const { data: cd } = await getClients()
     if (cd) setClients(cd)
+
     setImporting(false)
     showToast(`تم استيراد ${count} عميل ✔`)
   }
+
   reader.readAsBinaryString(file)
   e.target.value = ''
 }
-  const filteredClients = clients.filter(c => {
-    const mq = !clSearch || c.name.toLowerCase().includes(clSearch) || c.phone.includes(clSearch)
-    const ms = clStatusFilter === 'all' || c.status === clStatusFilter
-    return mq && ms
-  })
 
+const filteredClients = clients.filter(c => {
+  const mq = !clSearch || c.name.toLowerCase().includes(clSearch) || c.phone.includes(clSearch)
+  const ms = clStatusFilter === 'all' || c.status === clStatusFilter
+  return mq && ms
+})
   // ── POSTS ────────────────────────────────────────────────
   const publishPost = async () => {
     if (!postText.trim() && !postFile) { showToast('اكتب محتوى أو أرفق ملفاً'); return }
