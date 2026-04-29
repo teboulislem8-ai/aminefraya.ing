@@ -119,7 +119,7 @@ export async function POST(req: Request) {
     )
 
     await resend.emails.send({
-      from: 'invoice@resend.dev',
+      from: 'onboarding@resend.dev',
       to: email,
       subject: `Facture ${invoiceNumber}`,
       html: `
@@ -128,11 +128,11 @@ export async function POST(req: Request) {
         <p>Veuillez trouver votre facture en pièce jointe.</p>
       `,
       attachments: [
-        {
-          filename: `facture-${invoiceNumber}.pdf`,
-          content: pdfBuffer
-        }
-      ]
+  {
+    filename: `facture-${invoiceNumber}.pdf`,
+    content: pdfBuffer.toString('base64')
+  }
+]
     })
 
     return NextResponse.json({ success: true })
