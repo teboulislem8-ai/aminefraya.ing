@@ -37,6 +37,7 @@ export interface Post {
   client_id: string
   type: 'text' | 'image' | 'video' | 'file'
   content: string
+  media_url: string | null   // ← ADD THIS LINE
   media_label: string | null
   created_at: string
 }
@@ -213,4 +214,13 @@ export async function createArticle(data: Omit<Article, 'id' | 'created_at'>) {
 }
 export async function deleteArticle(id: string) {
   return supabase.from('articles').delete().eq('id', id)
+}
+// Storage – Post Media
+export async function uploadPostMedia(file: File): Promise<string | null> {
+  const ext = file.name.split('.').pop()
+  const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+  const { error } = await supabase.storage.from('posts-media').upload(path, file)
+  if (error) { console.error('Upload error:', error); return null }
+  const { data } = supabase.storage.from('posts-media').getPublicUrl(path)
+  return data.publicUrl
 }
