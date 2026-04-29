@@ -267,11 +267,57 @@ await createClient_db({
 
   // ── ORDERS ────────────────────────────────────────────────
   const addOrder = async () => {
-    if (!ofProduct || !ofMolecule || !ofClient) { showToast('المنتج والمادة الفعالة والعميل مطلوبون'); return }
-    await createOrder({ client_id: ofClient, product: ofProduct, molecule: ofMolecule, qty: ofQty, price: parseFloat(ofPrice) || 0, date: ofDate })
-    setShowOrderModal(false); setOfProduct(''); setOfMolecule(''); setOfQty(''); setOfPrice('')
-    const { data } = await getOrders(); if (data) setOrders(data as Order[]); showToast('تم حفظ الطلب ✓')
+  if (!ofProduct || !ofMolecule || !ofClient) {
+    showToast('المنتج والمادة الفعالة والعميل مطلوبون')
+    return
   }
+
+  await createOrder({
+    client_id: ofClient,
+    product: ofProduct,
+    molecule: ofMolecule,
+    qty: ofQty,
+    price: parseFloat(ofPrice) || 0,
+    date: ofDate
+  })
+
+  const selectedClient = clients.find(c => c.id === ofClient)
+
+  // ✅ only send email if client has email
+  if (selectedClient?.email) {
+    await fetch('/api/send-receipt', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        clientName: selectedClient?.name || 'Client',
+        email: selectedClient.email,
+        items: [
+          {
+            name: ofProduct,
+            qty: ofQty || 1,
+            price: parseFloat(ofPrice) || 0
+          }
+        ],
+        total: (parseFloat(ofPrice) || 0) * (ofQty || 1),
+        invoiceNumber: Date.now().toString(),
+        date: new Date().toLocaleDateString()
+      })
+    })
+  }
+
+  setShowOrderModal(false)
+  setOfProduct('')
+  setOfMolecule('')
+  setOfQty('')
+  setOfPrice('')
+
+  const { data } = await getOrders()
+  if (data) setOrders(data as Order[])
+
+  showToast('تم حفظ الطلب ✓')
+}
   const delOrder = async (id: string) => { await deleteOrder(id); const { data } = await getOrders(); if (data) setOrders(data as Order[]) }
   const filteredOrders = orders.filter(o => { const mc = ordClientFilter === 'all' || o.client_id === ordClientFilter; const mq = !ordSearch || o.product.toLowerCase().includes(ordSearch) || o.molecule.toLowerCase().includes(ordSearch); return mc && mq })
   const getClientName = (id: string) => clients.find(c => c.id === id)?.name || id
