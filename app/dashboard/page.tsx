@@ -294,15 +294,15 @@ await createClient_db({
         clientName: selectedClient?.name || 'Client',
         email: selectedClient.email,
         items: [
-          {
-            name: ofProduct,
-            qty: ofQty || 1,
-            price: parseFloat(ofPrice) || 0
-          }
-        ],
-        total: (parseFloat(ofPrice) || 0) * (ofQty || 1),
-        invoiceNumber: Date.now().toString(),
-        date: new Date().toLocaleDateString()
+  {
+    name: ofProduct,
+    qty: Number(ofQty) || 1,
+    price: parseFloat(ofPrice) || 0
+  }
+],
+total: (parseFloat(ofPrice) || 0) * (Number(ofQty) || 1),
+invoiceNumber: Date.now().toString(),
+date: new Date().toLocaleDateString()
       })
     })
   }
