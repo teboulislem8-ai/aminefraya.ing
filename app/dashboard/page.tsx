@@ -161,8 +161,10 @@ const importExcel = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const rows = XLSX.utils.sheet_to_json(ws) as Record<string, string>[]
     let count = 0
     for (const row of rows) {
-   const name = String(row['الاسم'] ?? row['name'] ?? '').trim()
+ const name = String(row['الاسم'] ?? row['name'] ?? '').trim()
 if (!name) continue
+
+const code = generateCode()
 
 await createClient_db({
   name,
