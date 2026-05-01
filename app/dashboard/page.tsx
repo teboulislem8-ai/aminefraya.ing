@@ -1,166 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-{filteredClients.map(c => (
-  <div key={c.id} style={{ ...B, padding: '0.9rem' }}>
 
-    {/* Top row */}
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 10,
-      marginBottom: '.8rem'
-    }}>
-
-      {/* Avatar */}
-      <div style={{
-        width: 38,
-        height: 38,
-        borderRadius: '50%',
-        background: '#EAF3DE',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 13,
-        fontWeight: 600,
-        color: '#2D6A4F',
-        flexShrink: 0
-      }}>
-        {initials(c.name)}
-      </div>
-
-      {/* Name + Phone */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{
-          fontSize: 13,
-          fontWeight: 600,
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap'
-        }}>
-          {c.name}
-        </div>
-
-        <div style={{
-          fontSize: 11,
-          color: '#5F6B5F',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap'
-        }}>
-          {c.phone}
-        </div>
-      </div>
-
-      {/* Status */}
-      <span
-        className={c.status === 'active' ? 'badge-active' : 'badge-inactive'}
-        style={{ flexShrink: 0 }}
-      >
-        {c.status === 'active' ? 'نشط' : 'غير نشط'}
-      </span>
-    </div>
-
-    {/* Tags */}
-    <div style={{
-      display: 'flex',
-      gap: 6,
-      flexWrap: 'wrap',
-      marginBottom: '.7rem'
-    }}>
-      <span style={{
-        fontSize: 11,
-        padding: '4px 10px',
-        borderRadius: 10,
-        background: '#F8F5F0',
-        color: '#5F6B5F'
-      }}>
-        📍 {c.region}
-      </span>
-
-      <span style={{
-        fontSize: 11,
-        padding: '4px 10px',
-        borderRadius: 10,
-        background: '#F8F5F0',
-        color: '#5F6B5F'
-      }}>
-        🌾 {c.type}
-      </span>
-    </div>
-
-    {/* Code block */}
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 6,
-      background: '#F8F5F0',
-      borderRadius: 8,
-      padding: '8px 10px',
-      marginBottom: '.7rem',
-      flexWrap: 'wrap'
-    }}>
-      <span style={{
-        fontSize: 13,
-        fontWeight: 600,
-        letterSpacing: '.12em',
-        color: '#2D6A4F',
-        flex: 1,
-        fontFamily: 'monospace',
-        minWidth: 0,
-        overflow: 'hidden',
-        textOverflow: 'ellipsis'
-      }}>
-        {c.code}
-      </span>
-
-      <button
-        onClick={() => {
-          navigator.clipboard.writeText(c.code)
-          showToast('تم نسخ الرمز ✓')
-        }}
-        style={{
-          fontSize: 12,
-          padding: '6px 10px',
-          border: '.5px solid #D0CCC6',
-          borderRadius: 6,
-          background: 'transparent',
-          cursor: 'pointer',
-          color: '#5F6B5F'
-        }}
-      >
-        نسخ
-      </button>
-
-      <button
-        onClick={() => shareWA(c.name, c.code)}
-        style={{
-          fontSize: 12,
-          padding: '6px 10px',
-          border: '.5px solid #D0CCC6',
-          borderRadius: 6,
-          background: 'transparent',
-          cursor: 'pointer',
-          color: '#5F6B5F'
-        }}
-      >
-        واتساب
-      </button>
-    </div>
-
-    {/* Actions */}
-    <div style={{
-      display: 'flex',
-      gap: 6,
-      flexWrap: 'wrap'
-    }}>
-      <button onClick={() => openEdit(c)} style={{ ...BDel, flex: 1 }}>✏️ تعديل</button>
-      <button onClick={() => regenCode(c)} style={{ ...BDel, flex: 1 }}>🔄 رمز</button>
-      <button onClick={() => delClient(c.id)} style={{ ...BDel, flex: 1, color: '#A32D2D' }}>🗑 حذف</button>
-    </div>
-
-  </div>
-))}
 import {
   getOwnerSettings, updateOwnerSettings,
   getClients, createClient_db, updateClient_db, deleteClient_db, generateCode,
@@ -618,26 +459,9 @@ date: new Date().toLocaleDateString()
   }}
 >
       {/* Nav */}
-      <nav style={{
-  display: 'flex',
-  flexWrap: 'wrap',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: 8,
-  padding: '10px 14px',
-  borderBottom: '.5px solid #E4E0DA',
-  background: '#fff',
-  position: 'sticky',
-  top: 0,
-  zIndex: 100
-}}> padding: '12px 20px', borderBottom: '.5px solid #E4E0DA', background: '#fff', position: 'sticky', top: 0, zIndex: 100 }}>
+      <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px', borderBottom: '.5px solid #E4E0DA', background: '#fff', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}><Logo /><span style={{ fontSize: 14, fontWeight: 600, color: '#2D6A4F' }}>aminefraya.ing</span></div>
-        <div style={{
-  display: 'flex',
-  alignItems: 'center',
-  gap: 8,
-  flexWrap: 'wrap'
-}}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontSize: 11, background: '#EAF3DE', color: '#27500A', padding: '3px 10px', borderRadius: 10, fontWeight: 500 }}>مدير النظام</span>
           <button onClick={() => setAuthed(false)} style={{ fontSize: 11, padding: '4px 12px', border: '.5px solid #D0CCC6', borderRadius: 10, background: 'transparent', cursor: 'pointer', color: '#5F6B5F' }}>خروج</button>
         </div>
@@ -702,166 +526,33 @@ date: new Date().toLocaleDateString()
     gap: 10
   }}
 >
-               {filteredClients.map(c => (
-  <div key={c.id} style={{ ...B, padding: '0.9rem' }}>
+                {filteredClients.map(c => (
+                  <div key={c.id} style={B}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: '.8rem' }}>
+                      <div style={{ width: 38, height: 38, borderRadius: '50%', background: '#EAF3DE', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 600, color: '#2D6A4F', flexShrink: 0 }}>{initials(c.name)}</div>
+                      <div style={{ flex: 1 }}><div style={{ fontSize: 13, fontWeight: 600 }}>{c.name}</div><div style={{ fontSize: 11, color: '#5F6B5F' }}>{c.phone}</div></div>
+                      <span className={c.status === 'active' ? 'badge-active' : 'badge-inactive'}>{c.status === 'active' ? 'نشط' : 'غير نشط'}</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginBottom: '.7rem' }}>
+                      <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 8, background: '#F8F5F0', color: '#5F6B5F' }}>📍 {c.region}</span>
+                      <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 8, background: '#F8F5F0', color: '#5F6B5F' }}>🌾 {c.type}</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#F8F5F0', borderRadius: 6, padding: '6px 10px', marginBottom: '.7rem' }}>
+                      <span style={{ fontSize: 13, fontWeight: 600, letterSpacing: '.12em', color: '#2D6A4F', flex: 1, fontFamily: 'monospace' }}>{c.code}</span>
+                      <button onClick={() => { navigator.clipboard.writeText(c.code); showToast('تم نسخ الرمز ✓') }} style={{ fontSize: 10, padding: '3px 8px', border: '.5px solid #D0CCC6', borderRadius: 5, background: 'transparent', cursor: 'pointer', color: '#5F6B5F' }}>نسخ</button>
+                      <button onClick={() => shareWA(c.name, c.code)} style={{ fontSize: 10, padding: '3px 8px', border: '.5px solid #D0CCC6', borderRadius: 5, background: 'transparent', cursor: 'pointer', color: '#5F6B5F' }}>واتساب</button>
+                    </div>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <button onClick={() => openEdit(c)} style={BDel}>✏️ تعديل</button>
+                      <button onClick={() => regenCode(c)} style={BDel}>🔄 رمز</button>
+                      <button onClick={() => delClient(c.id)} style={{ ...BDel, color: '#A32D2D' }}>🗑 حذف</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
-    {/* Top row */}
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 10,
-      marginBottom: '.8rem'
-    }}>
-
-      {/* Avatar */}
-      <div style={{
-        width: 38,
-        height: 38,
-        borderRadius: '50%',
-        background: '#EAF3DE',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 13,
-        fontWeight: 600,
-        color: '#2D6A4F',
-        flexShrink: 0
-      }}>
-        {initials(c.name)}
-      </div>
-
-      {/* Name + Phone */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{
-          fontSize: 13,
-          fontWeight: 600,
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap'
-        }}>
-          {c.name}
-        </div>
-
-        <div style={{
-          fontSize: 11,
-          color: '#5F6B5F',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap'
-        }}>
-          {c.phone}
-        </div>
-      </div>
-
-      {/* Status */}
-      <span
-        className={c.status === 'active' ? 'badge-active' : 'badge-inactive'}
-        style={{ flexShrink: 0 }}
-      >
-        {c.status === 'active' ? 'نشط' : 'غير نشط'}
-      </span>
-    </div>
-
-    {/* Tags */}
-    <div style={{
-      display: 'flex',
-      gap: 6,
-      flexWrap: 'wrap',
-      marginBottom: '.7rem'
-    }}>
-      <span style={{
-        fontSize: 11,
-        padding: '4px 10px',
-        borderRadius: 10,
-        background: '#F8F5F0',
-        color: '#5F6B5F'
-      }}>
-        📍 {c.region}
-      </span>
-
-      <span style={{
-        fontSize: 11,
-        padding: '4px 10px',
-        borderRadius: 10,
-        background: '#F8F5F0',
-        color: '#5F6B5F'
-      }}>
-        🌾 {c.type}
-      </span>
-    </div>
-
-    {/* Code block */}
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 6,
-      background: '#F8F5F0',
-      borderRadius: 8,
-      padding: '8px 10px',
-      marginBottom: '.7rem',
-      flexWrap: 'wrap'
-    }}>
-      <span style={{
-        fontSize: 13,
-        fontWeight: 600,
-        letterSpacing: '.12em',
-        color: '#2D6A4F',
-        flex: 1,
-        fontFamily: 'monospace',
-        minWidth: 0,
-        overflow: 'hidden',
-        textOverflow: 'ellipsis'
-      }}>
-        {c.code}
-      </span>
-
-      <button
-        onClick={() => {
-          navigator.clipboard.writeText(c.code)
-          showToast('تم نسخ الرمز ✓')
-        }}
-        style={{
-          fontSize: 12,
-          padding: '6px 10px',
-          border: '.5px solid #D0CCC6',
-          borderRadius: 6,
-          background: 'transparent',
-          cursor: 'pointer',
-          color: '#5F6B5F'
-        }}
-      >
-        نسخ
-      </button>
-
-      <button
-        onClick={() => shareWA(c.name, c.code)}
-        style={{
-          fontSize: 12,
-          padding: '6px 10px',
-          border: '.5px solid #D0CCC6',
-          borderRadius: 6,
-          background: 'transparent',
-          cursor: 'pointer',
-          color: '#5F6B5F'
-        }}
-      >
-        واتساب
-      </button>
-    </div>
-
-    {/* Actions */}
-    <div style={{
-      display: 'flex',
-      gap: 6,
-      flexWrap: 'wrap'
-    }}>
-      <button onClick={() => openEdit(c)} style={{ ...BDel, flex: 1 }}>✏️ تعديل</button>
-      <button onClick={() => regenCode(c)} style={{ ...BDel, flex: 1 }}>🔄 رمز</button>
-      <button onClick={() => delClient(c.id)} style={{ ...BDel, flex: 1, color: '#A32D2D' }}>🗑 حذف</button>
-    </div>
-
-  </div>
-))}
           {/* POSTS */}
           {panel === 'posts' && (
             <div>
