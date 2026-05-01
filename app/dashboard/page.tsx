@@ -799,65 +799,222 @@ date: new Date().toLocaleDateString()
         </div>
       </div>
 
-      {/* CLIENT MODAL */}
-      {showClientModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 500, padding: 20 }} onClick={e => { if (e.target === e.currentTarget && editClient) setShowClientModal(false) }}>
-          <div style={{ background: '#fff', borderRadius: 14, width: '100%', maxWidth: 420, border: '.5px solid #E4E0DA', maxHeight: '90vh', overflowY: 'auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.2rem', borderBottom: '.5px solid #E4E0DA' }}>
-              <div style={{ fontSize: 14, fontWeight: 600 }}>{editClient ? 'تعديل بيانات العميل' : 'إضافة عميل جديد'}</div>
-              {editClient && <button onClick={() => setShowClientModal(false)} style={{ width: 26, height: 26, border: '.5px solid #D0CCC6', borderRadius: 6, background: 'transparent', cursor: 'pointer', fontSize: 13, color: '#5F6B5F' }}>✕</button>}
-            </div>
-            <div style={{ padding: '1.2rem' }}>
-              <div style={{ marginBottom: '.9rem' }}><label className="f-label">الاسم الكامل *</label><input value={cfName} onChange={e => setCfName(e.target.value)} placeholder="محمد بن علي" style={FI} /></div>
-              <div style={{ marginBottom: '.9rem' }}>
-  <label className="f-label">رقم الهاتف</label>
-  <input
-    value={cfPhone}
-    onChange={e => setCfPhone(e.target.value)}
-    placeholder="+213 6XX XXX XXX"
-    style={{ ...FI, direction: 'ltr', textAlign: 'right' }}
-  />
-</div>
+     {/* CLIENT MODAL */}
+{showClientModal && (
+  <div
+    style={{
+      position: 'fixed',
+      inset: 0,
+      background: 'rgba(0,0,0,.5)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 500,
+      padding: 20
+    }}
+    onClick={e => {
+      if (e.target === e.currentTarget) setShowClientModal(false)
+    }}
+  >
+    <div
+      style={{
+        position: 'relative',
+        background: '#fff',
+        borderRadius: 14,
+        width: '100%',
+        maxWidth: 420,
+        border: '.5px solid #E4E0DA',
+        maxHeight: '90vh',
+        overflowY: 'auto'
+      }}
+    >
 
-<div style={{ marginBottom: '.9rem' }}>
-  <label className="f-label">البريد الإلكتروني</label>
-  <input
-    type="email"
-    value={cfEmail}
-    onChange={e => setCfEmail(e.target.value)}
-    placeholder="client@email.com"
-    style={FI}
-  />
-</div>
+      {/* ❌ CLOSE BUTTON */}
+      <button
+        onClick={() => setShowClientModal(false)}
+        style={{
+          position: 'absolute',
+          top: 10,
+          left: 10,
+          width: 24,
+          height: 24,
+          border: '.5px solid #D0CCC6',
+          borderRadius: 5,
+          background: 'transparent',
+          cursor: 'pointer',
+          fontSize: 12,
+          color: '#9CA3AF',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 10
+        }}
+      >
+        ✕
+      </button>
 
-<div style={{ marginBottom: '.9rem' }}>
-  <label className="f-label">الولاية / المنطقة</label>
-  <input
-    value={cfRegion}
-    onChange={e => setCfRegion(e.target.value)}
-    placeholder="قسنطينة..."
-    style={FI}
-  />
-</div>
-              <div style={{ marginBottom: '.9rem' }}><label className="f-label">نوع النشاط</label><select value={cfType} onChange={e => setCfType(e.target.value)} style={FI}>{['زراعة حبوب', 'بستنة وخضروات', 'أشجار مثمرة', 'تربية مواشي', 'زراعة متنوعة'].map(t => <option key={t}>{t}</option>)}</select></div>
-              <div style={{ marginBottom: '.9rem' }}><label className="f-label">ملاحظات</label><textarea value={cfNotes} onChange={e => setCfNotes(e.target.value)} placeholder="معلومات إضافية..." style={{ ...FI, height: 65, resize: 'none' }} /></div>
-              <div style={{ marginBottom: '.9rem' }}><label className="f-label">الحالة</label><select value={cfStatus} onChange={e => setCfStatus(e.target.value as 'active' | 'inactive')} style={FI}><option value="active">نشط</option><option value="inactive">غير نشط</option></select></div>
-              {newCode && (
-                <div style={{ background: '#EAF3DE', border: '.5px solid #C0DD97', borderRadius: 14, padding: '1.2rem', textAlign: 'center', marginTop: '1rem' }}>
-                  <div style={{ fontSize: 12, color: '#27500A', fontWeight: 600 }}>رمز الدخول الخاص بالعميل</div>
-                  <div style={{ fontSize: 28, fontWeight: 700, letterSpacing: '.18em', color: '#2D6A4F', fontFamily: 'monospace', margin: '.5rem 0' }}>{newCode}</div>
-                  <div style={{ fontSize: 12, color: '#3B6D11', marginBottom: '.5rem' }}>أرسل هذا الرمز للعميل</div>
-                  <button onClick={() => { navigator.clipboard.writeText(newCode); showToast('تم نسخ الرمز ✓') }} style={{ fontSize: 12, padding: '5px 14px', border: '.5px solid #D0CCC6', borderRadius: 5, background: 'transparent', cursor: 'pointer', color: '#5F6B5F' }}>نسخ الرمز</button>
-                </div>
-              )}
-            </div>
-            <div style={{ display: 'flex', gap: 8, padding: '1rem 1.2rem', borderTop: '.5px solid #E4E0DA' }}>
-              {editClient && <button onClick={() => setShowClientModal(false)} style={{ ...BDel, flex: 'none', padding: '9px 16px' }}>إلغاء</button>}
-              <button onClick={saveClient} style={{ ...BSave, flex: 1, padding: 9, fontSize: 13 }}>{editClient ? 'حفظ التغييرات' : newCode ? 'تم — أغلق' : 'حفظ وتوليد الرمز'}</button>
-            </div>
-          </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '1rem 1.2rem',
+          borderBottom: '.5px solid #E4E0DA'
+        }}
+      >
+        <div style={{ fontSize: 14, fontWeight: 600 }}>
+          {editClient ? 'تعديل بيانات العميل' : 'إضافة عميل جديد'}
         </div>
-      )}
+      </div>
+
+      <div style={{ padding: '1.2rem' }}>
+        <div style={{ marginBottom: '.9rem' }}>
+          <label className="f-label">الاسم الكامل *</label>
+          <input
+            value={cfName}
+            onChange={e => setCfName(e.target.value)}
+            placeholder="محمد بن علي"
+            style={FI}
+          />
+        </div>
+
+        <div style={{ marginBottom: '.9rem' }}>
+          <label className="f-label">رقم الهاتف</label>
+          <input
+            value={cfPhone}
+            onChange={e => setCfPhone(e.target.value)}
+            placeholder="+213 6XX XXX XXX"
+            style={{ ...FI, direction: 'ltr', textAlign: 'right' }}
+          />
+        </div>
+
+        <div style={{ marginBottom: '.9rem' }}>
+          <label className="f-label">البريد الإلكتروني</label>
+          <input
+            type="email"
+            value={cfEmail}
+            onChange={e => setCfEmail(e.target.value)}
+            placeholder="client@email.com"
+            style={FI}
+          />
+        </div>
+
+        <div style={{ marginBottom: '.9rem' }}>
+          <label className="f-label">الولاية / المنطقة</label>
+          <input
+            value={cfRegion}
+            onChange={e => setCfRegion(e.target.value)}
+            placeholder="قسنطينة..."
+            style={FI}
+          />
+        </div>
+
+        <div style={{ marginBottom: '.9rem' }}>
+          <label className="f-label">نوع النشاط</label>
+          <select value={cfType} onChange={e => setCfType(e.target.value)} style={FI}>
+            {['زراعة حبوب', 'بستنة وخضروات', 'أشجار مثمرة', 'تربية مواشي', 'زراعة متنوعة'].map(t => (
+              <option key={t}>{t}</option>
+            ))}
+          </select>
+        </div>
+
+        <div style={{ marginBottom: '.9rem' }}>
+          <label className="f-label">ملاحظات</label>
+          <textarea
+            value={cfNotes}
+            onChange={e => setCfNotes(e.target.value)}
+            placeholder="معلومات إضافية..."
+            style={{ ...FI, height: 65, resize: 'none' }}
+          />
+        </div>
+
+        <div style={{ marginBottom: '.9rem' }}>
+          <label className="f-label">الحالة</label>
+          <select
+            value={cfStatus}
+            onChange={e => setCfStatus(e.target.value as 'active' | 'inactive')}
+            style={FI}
+          >
+            <option value="active">نشط</option>
+            <option value="inactive">غير نشط</option>
+          </select>
+        </div>
+
+        {newCode && (
+          <div
+            style={{
+              background: '#EAF3DE',
+              border: '.5px solid #C0DD97',
+              borderRadius: 14,
+              padding: '1.2rem',
+              textAlign: 'center',
+              marginTop: '1rem'
+            }}
+          >
+            <div style={{ fontSize: 12, color: '#27500A', fontWeight: 600 }}>
+              رمز الدخول الخاص بالعميل
+            </div>
+            <div
+              style={{
+                fontSize: 28,
+                fontWeight: 700,
+                letterSpacing: '.18em',
+                color: '#2D6A4F',
+                fontFamily: 'monospace',
+                margin: '.5rem 0'
+              }}
+            >
+              {newCode}
+            </div>
+            <div style={{ fontSize: 12, color: '#3B6D11', marginBottom: '.5rem' }}>
+              أرسل هذا الرمز للعميل
+            </div>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(newCode)
+                showToast('تم نسخ الرمز ✓')
+              }}
+              style={{
+                fontSize: 12,
+                padding: '5px 14px',
+                border: '.5px solid #D0CCC6',
+                borderRadius: 5,
+                background: 'transparent',
+                cursor: 'pointer',
+                color: '#5F6B5F'
+              }}
+            >
+              نسخ الرمز
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          gap: 8,
+          padding: '1rem 1.2rem',
+          borderTop: '.5px solid #E4E0DA'
+        }}
+      >
+        <button
+          onClick={() => setShowClientModal(false)}
+          style={{ ...BDel, flex: 'none', padding: '9px 16px' }}
+        >
+          إلغاء
+        </button>
+
+        <button
+          onClick={saveClient}
+          style={{ ...BSave, flex: 1, padding: 9, fontSize: 13 }}
+        >
+          {editClient ? 'حفظ التغييرات' : newCode ? 'تم — أغلق' : 'حفظ وتوليد الرمز'}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
       {/* ORDER MODAL */}
       {showOrderModal && (
