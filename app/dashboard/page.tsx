@@ -1016,28 +1016,136 @@ date: new Date().toLocaleDateString()
   </div>
 )}
 
-      {/* ORDER MODAL */}
-      {showOrderModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 500, padding: 20 }} onClick={e => { if (e.target === e.currentTarget) setShowOrderModal(false) }}>
-          <div style={{ background: '#fff', borderRadius: 14, width: '100%', maxWidth: 400, border: '.5px solid #E4E0DA' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem 1.2rem', borderBottom: '.5px solid #E4E0DA' }}><div style={{ fontSize: 14, fontWeight: 600 }}>إضافة طلب جديد</div><button onClick={() => setShowOrderModal(false)} style={{ width: 26, height: 26, border: '.5px solid #D0CCC6', borderRadius: 6, background: 'transparent', cursor: 'pointer', fontSize: 13, color: '#5F6B5F' }}>✕</button></div>
-            <div style={{ padding: '1.2rem', display: 'flex', flexDirection: 'column', gap: '.8rem' }}>
-              <div><label className="f-label">العميل *</label><select value={ofClient} onChange={e => setOfClient(e.target.value)} style={FI}>{clients.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
-              <div><label className="f-label">اسم المنتج *</label><input value={ofProduct} onChange={e => setOfProduct(e.target.value)} placeholder="مثال: Mancozeb 80WP" style={FI} /></div>
-              <div><label className="f-label">المادة الفعالة *</label><input value={ofMolecule} onChange={e => setOfMolecule(e.target.value)} placeholder="مثال: Mancozeb" style={FI} /></div>
-              <div><label className="f-label">الكمية</label><input value={ofQty} onChange={e => setOfQty(e.target.value)} placeholder="مثال: 5 كغ" style={FI} /></div>
-              <div><label className="f-label">السعر (دج) *</label><input type="number" value={ofPrice} onChange={e => setOfPrice(e.target.value)} placeholder="0" style={{ ...FI, direction: 'ltr', textAlign: 'right' }} /></div>
-              <div><label className="f-label">التاريخ</label><input type="date" value={ofDate} onChange={e => setOfDate(e.target.value)} style={FI} /></div>
-            </div>
-            <div style={{ display: 'flex', gap: 8, padding: '1rem 1.2rem', borderTop: '.5px solid #E4E0DA' }}>
-              <button onClick={() => setShowOrderModal(false)} style={{ ...BDel, flex: 'none', padding: '9px 16px' }}>إلغاء</button>
-              <button onClick={addOrder} style={{ ...BSave, flex: 1, padding: 9, fontSize: 13 }}>حفظ الطلب</button>
-            </div>
-          </div>
-        </div>
-      )}
+{/* ORDER MODAL */}
+{showOrderModal && (
+  <div
+    style={{
+      position: 'fixed',
+      inset: 0,
+      background: 'rgba(0,0,0,.5)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 500,
+      padding: 20
+    }}
+    onClick={e => {
+      if (e.target === e.currentTarget) setShowOrderModal(false)
+    }}
+  >
+    <div
+      style={{
+        position: 'relative',
+        background: '#fff',
+        borderRadius: 14,
+        width: '100%',
+        maxWidth: 400,
+        border: '.5px solid #E4E0DA'
+      }}
+    >
 
-      <Toast msg={toast} />
+      {/* ❌ CLOSE BUTTON */}
+      <button
+        onClick={() => setShowOrderModal(false)}
+        style={{
+          position: 'absolute',
+          top: 10,
+          left: 10,
+          width: 24,
+          height: 24,
+          border: '.5px solid #D0CCC6',
+          borderRadius: 5,
+          background: 'transparent',
+          cursor: 'pointer',
+          fontSize: 12,
+          color: '#9CA3AF',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 10
+        }}
+      >
+        ✕
+      </button>
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: '1rem 1.2rem',
+          borderBottom: '.5px solid #E4E0DA'
+        }}
+      >
+        <div style={{ fontSize: 14, fontWeight: 600 }}>
+          إضافة طلب جديد
+        </div>
+      </div>
+
+      <div
+        style={{
+          padding: '1.2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '.8rem'
+        }}
+      >
+        <div>
+          <label className="f-label">العميل *</label>
+          <select value={ofClient} onChange={e => setOfClient(e.target.value)} style={FI}>
+            {clients.map(c => (
+              <option key={c.id} value={c.id}>{c.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="f-label">اسم المنتج *</label>
+          <input value={ofProduct} onChange={e => setOfProduct(e.target.value)} placeholder="مثال: Mancozeb 80WP" style={FI} />
+        </div>
+
+        <div>
+          <label className="f-label">المادة الفعالة *</label>
+          <input value={ofMolecule} onChange={e => setOfMolecule(e.target.value)} placeholder="مثال: Mancozeb" style={FI} />
+        </div>
+
+        <div>
+          <label className="f-label">الكمية</label>
+          <input value={ofQty} onChange={e => setOfQty(e.target.value)} placeholder="مثال: 5 كغ" style={FI} />
+        </div>
+
+        <div>
+          <label className="f-label">السعر (دج) *</label>
+          <input type="number" value={ofPrice} onChange={e => setOfPrice(e.target.value)} placeholder="0" style={{ ...FI, direction: 'ltr', textAlign: 'right' }} />
+        </div>
+
+        <div>
+          <label className="f-label">التاريخ</label>
+          <input type="date" value={ofDate} onChange={e => setOfDate(e.target.value)} style={FI} />
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          gap: 8,
+          padding: '1rem 1.2rem',
+          borderTop: '.5px solid #E4E0DA'
+        }}
+      >
+        <button
+          onClick={() => setShowOrderModal(false)}
+          style={{ ...BDel, flex: 'none', padding: '9px 16px' }}
+        >
+          إلغاء
+        </button>
+
+        <button
+          onClick={addOrder}
+          style={{ ...BSave, flex: 1, padding: 9, fontSize: 13 }}
+        >
+          حفظ الطلب
+        </button>
+      </div>
     </div>
-  )
-}
+  </div>
+)}
