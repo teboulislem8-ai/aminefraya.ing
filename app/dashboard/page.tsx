@@ -519,7 +519,13 @@ date: new Date().toLocaleDateString()
                 <input value={clSearch} onChange={e => setClSearch(e.target.value)} placeholder="ابحث بالاسم أو الهاتف..." style={{ ...FI, flex: 1, maxWidth: 260 }} />
                 <select value={clStatusFilter} onChange={e => setClStatusFilter(e.target.value)} style={FI}><option value="all">الكل</option><option value="active">نشط</option><option value="inactive">غير نشط</option></select>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
+              <div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+    gap: 10
+  }}
+>
                 {filteredClients.map(c => (
                   <div key={c.id} style={B}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: '.8rem' }}>
