@@ -1,9 +1,9 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { getArticles, type Article } from '@/lib/supabase'
 
-const CAT_STYLES = {
+const CAT_STYLES: Record<string, {bg:string,c:string}> = {
   'حماية النباتات':{bg:'#EAF3DE',c:'#3B6D11'},
   'التغذية الزراعية':{bg:'#FAEEDA',c:'#854F0B'},
   'الري والمياه':{bg:'#E6F1FB',c:'#185FA5'},
@@ -77,7 +77,8 @@ export default function HomePage(){
               padding:'10px',
               background:'#2D6A4F',
               color:'#fff',
-              border:'none'
+              border:'none',
+              borderRadius:8
             }}
           >
             دخول
@@ -88,7 +89,8 @@ export default function HomePage(){
               width:'100%',
               maxWidth:300,
               padding:'10px',
-              border:'1px solid #2D6A4F'
+              border:'1px solid #2D6A4F',
+              borderRadius:8
             }}
           >
             الخدمات
@@ -107,6 +109,7 @@ export default function HomePage(){
         }}>
           {articles.map(a=>{
             const cs = CAT_STYLES[a.category] || {bg:'#eee',c:'#333'}
+
             return(
               <div
                 key={a.id}
@@ -114,14 +117,16 @@ export default function HomePage(){
                 style={{
                   border:'1px solid #eee',
                   padding:'1rem',
-                  cursor:'pointer'
+                  cursor:'pointer',
+                  borderRadius:10
                 }}
               >
                 <span style={{
                   background:cs.bg,
                   color:cs.c,
                   padding:'2px 8px',
-                  fontSize:10
+                  fontSize:10,
+                  borderRadius:6
                 }}>
                   {a.category}
                 </span>
@@ -145,7 +150,8 @@ export default function HomePage(){
             display:'flex',
             justifyContent:'center',
             alignItems:'center',
-            padding:20
+            padding:20,
+            zIndex:1000
           }}
           onClick={(e)=>{
             if(e.target===e.currentTarget) setModal(null)
@@ -157,7 +163,8 @@ export default function HomePage(){
             maxWidth:500,
             maxHeight:'80vh',
             overflow:'auto',
-            padding:20
+            padding:20,
+            borderRadius:12
           }}>
             <h3>{modal.title}</h3>
 
@@ -173,7 +180,18 @@ export default function HomePage(){
               ))}
             </div>
 
-            <button onClick={()=>setModal(null)}>close</button>
+            <button
+              onClick={()=>setModal(null)}
+              style={{
+                marginTop:15,
+                padding:'6px 12px',
+                border:'1px solid #ccc',
+                borderRadius:6,
+                cursor:'pointer'
+              }}
+            >
+              إغلاق
+            </button>
           </div>
         </div>
       )}
