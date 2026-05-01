@@ -115,7 +115,7 @@ export default function HomePage(){
       {/* Services */}
       <div style={{maxWidth:1100,margin:'0 auto',padding:'3rem 20px'}}>
         <div className="section-sep">خدماتنا</div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:14}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit, minmax(250px, 1fr))',gap:14}}>
           {[{icon:'🌤️',title:'التنبيهات الزراعية',desc:'بيانات فورية عن الطقس والمخاطر لمنطقة قسنطينة.',badge:'مباشر · بيانات حية',bg:'#EAF3DE',c:'#3B6D11',id:'alerts'},{icon:'📋',title:'الأبحاث العلمية',desc:'ملخصات علمية موثقة لأفضل القرارات الزراعية.',badge:'معرفة · علم · تطبيق',bg:'#FAEEDA',c:'#854F0B',id:'articles'},{icon:'🔐',title:'بوابة العميل الخاصة',desc:'برامجك، جداولك، وطلباتك في مساحة آمنة.',badge:'مشفّر · خاص · آمن',bg:'#E1F5EE',c:'#0F6E56',id:'portal'}].map((m,i)=>(
             <div key={i} onClick={()=>m.id==='portal'?router.push('/portal'):document.getElementById(m.id)?.scrollIntoView({behavior:'smooth'})}
               style={{background:'#fff',border:`.5px solid ${i===2?'#2D6A4F':'#E4E0DA'}`,borderRadius:14,padding:'1.4rem',cursor:'pointer'}}>
@@ -193,7 +193,12 @@ export default function HomePage(){
             <button key={f} onClick={()=>{setFilter(f);setPage(1)}} style={{fontSize:11,padding:'5px 14px',borderRadius:20,border:'.5px solid #D0CCC6',background:filter===f?'#2D6A4F':'transparent',color:filter===f?'white':'#5F6B5F',cursor:'pointer'}}>{f==='all'?'الكل':f}</button>
           ))}
         </div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:12,marginBottom:'1.5rem'}}>
+        <div style={{
+  display:'grid',
+  gridTemplateColumns:'repeat(auto-fit, minmax(260px, 1fr))',
+  gap:12,
+  marginBottom:'1.5rem'
+}}>
           {paged.length ? paged.map(a=>{const cs=CAT_STYLES[a.category]||{bg:'#F1EFE8',c:'#5F5E5A'};return(
             <div key={a.id} onClick={()=>setModal(a)} style={{background:'#fff',border:'.5px solid #E4E0DA',borderRadius:14,overflow:'hidden',cursor:'pointer'}}>
               <div style={{padding:'.9rem 1rem .6rem'}}>
