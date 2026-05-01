@@ -618,9 +618,26 @@ date: new Date().toLocaleDateString()
   }}
 >
       {/* Nav */}
-      <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px', borderBottom: '.5px solid #E4E0DA', background: '#fff', position: 'sticky', top: 0, zIndex: 100 }}>
+      <nav style={{
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: 8,
+  padding: '10px 14px',
+  borderBottom: '.5px solid #E4E0DA',
+  background: '#fff',
+  position: 'sticky',
+  top: 0,
+  zIndex: 100
+}}> padding: '12px 20px', borderBottom: '.5px solid #E4E0DA', background: '#fff', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}><Logo /><span style={{ fontSize: 14, fontWeight: 600, color: '#2D6A4F' }}>aminefraya.ing</span></div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{
+  display: 'flex',
+  alignItems: 'center',
+  gap: 8,
+  flexWrap: 'wrap'
+}}>
           <span style={{ fontSize: 11, background: '#EAF3DE', color: '#27500A', padding: '3px 10px', borderRadius: 10, fontWeight: 500 }}>مدير النظام</span>
           <button onClick={() => setAuthed(false)} style={{ fontSize: 11, padding: '4px 12px', border: '.5px solid #D0CCC6', borderRadius: 10, background: 'transparent', cursor: 'pointer', color: '#5F6B5F' }}>خروج</button>
         </div>
