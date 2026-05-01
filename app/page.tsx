@@ -138,7 +138,7 @@ export default function HomePage(){
         </div>
         {loading?<div style={{textAlign:'center',padding:'3rem',color:'#5F6B5F',fontSize:13}}>⏳ جاري جلب بيانات الطقس من Open-Meteo...</div>:weather?(
           <>
-            <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:10,marginBottom:'1.5rem'}}>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit, minmax(140px, 1fr))',gap:10,marginBottom:'1.5rem'}}>
               {[{l:'الحرارة',v:`${Math.round(weather.temp)}°`,u:'مئوية'},{l:'الرطوبة',v:`${weather.humidity}%`,u:'نسبة مئوية'},{l:'الرياح',v:`${Math.round(weather.windSpeed)}`,u:`كم/س · ${wDir(weather.windDir)}`},{l:'الطقس',v:wIcon(weather.code),u:wDesc(weather.code)}].map((w,i)=>(
                 <div key={i} style={{background:'#F8F5F0',borderRadius:10,padding:'.9rem',textAlign:'center'}}>
                   <div style={{fontSize:10,color:'#9CA89C',textTransform:'uppercase',letterSpacing:'.05em',marginBottom:4}}>{w.l}</div>
