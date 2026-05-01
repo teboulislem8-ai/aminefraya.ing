@@ -449,15 +449,13 @@ date: new Date().toLocaleDateString()
   ]
 
   return (
-   <div
-  style={{
-    minHeight: '100vh',
-    width: '100%',
-    maxWidth: '100vw',
-    overflowX: 'hidden',
-    boxSizing: 'border-box'
-  }}
->
+   <div style={{
+  minHeight: '100vh',
+  width: '100%',
+  maxWidth: '100vw',
+  overflowX: 'hidden',
+  boxSizing: 'border-box'
+}}>
       {/* Nav */}
       <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px', borderBottom: '.5px solid #E4E0DA', background: '#fff', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => router.push('/')}><Logo /><span style={{ fontSize: 14, fontWeight: 600, color: '#2D6A4F' }}>aminefraya.ing</span></div>
