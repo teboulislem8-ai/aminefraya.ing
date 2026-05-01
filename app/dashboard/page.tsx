@@ -422,7 +422,17 @@ date: new Date().toLocaleDateString()
 
   // ── LOGIN ─────────────────────────────────────────────────
   if (!authed) return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#F8F5F0' }}>
+    <div
+  style={{
+    display: 'flex',
+    alignItems: 'center',      // keeps it visually centered
+    justifyContent: 'center',
+    minHeight: '100dvh',       // ✅ better than 100vh on mobile
+    padding: '24px 16px',      // breathing room on small screens
+    boxSizing: 'border-box',
+    background: '#F8F5F0'
+  }}
+>
       <div style={{ background: '#fff', border: '.5px solid #E4E0DA', borderRadius: 14, padding: '2.2rem', width: '100%', maxWidth: 360, boxShadow: '0 1px 3px rgba(0,0,0,.08)' }}>
         <div style={{ textAlign: 'center', marginBottom: '1.5rem', fontSize: 28 }}>🌿</div>
         <div style={{ fontSize: 18, fontWeight: 600, textAlign: 'center', marginBottom: 4 }}>لوحة تحكم المدير</div>
