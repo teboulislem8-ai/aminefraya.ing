@@ -123,38 +123,61 @@ export default function HomePage(){
       </nav>
 
       {/* Hero */}
-      <div style={{
-  maxWidth:1100,
-  margin:'0 auto',
-  padding:'2rem 16px',
-  textAlign:'center'
-}}>
-        <div style={{fontSize:11,letterSpacing:'.12em',color:'#C9963A',fontWeight:600,textTransform:'uppercase',marginBottom:'1rem'}}>زراعة ذكية · شرق الجزائر</div>
-        <div style={{fontSize:38,fontWeight:600,lineHeight:1.25,marginBottom:6}}>شريكك الزراعي الموثوق</div>
-        <div style={{fontSize:15,color:'#5F6B5F',fontStyle:'italic',marginBottom:'1.2rem'}}>Votre Partenaire Agricole de Confiance</div>
-        <div style={{
-  fontSize:14,
-  color:'#5F6B5F',
-  lineHeight:1.8,
-  marginBottom:'2rem',
-  maxWidth:520,
-  marginLeft:'auto',
-  marginRight:'auto',
-  textAlign:'center'
-}}>
-        <div style={{
-  display:'flex',
-  flexDirection:'column',
-  gap:10,
-  alignItems:'center'
-}}>
-          <button onClick={()=>router.push('/portal')} style={{padding:'11px 28px',background:'#2D6A4F',color:'white',border:'none',borderRadius:10,fontSize:14,cursor:'pointer'}}>
-  دخول بوابة العميل
-</button>
-          <button onClick={()=>document.getElementById('alerts')?.scrollIntoView({behavior:'smooth'})} style={{padding:'11px 28px',background:'transparent',color:'#2D6A4F',border:'1px solid #2D6A4F',borderRadius:10,fontSize:14,cursor:'pointer'}}>
-  اكتشف الخدمات
-</button>
-        </div>
+      {/* Hero text */}
+<div
+  style={{
+    fontSize:14,
+    color:'#5F6B5F',
+    lineHeight:1.8,
+    marginBottom:'2rem',
+    maxWidth:520,
+    marginLeft:'auto',
+    marginRight:'auto',
+    textAlign:'center'
+  }}
+>
+  مستلزمات زراعية، استشارات متخصصة، ومتابعة فردية لكل عميل — كل ما تحتاجه في مكان واحد
+</div>
+
+{/* Hero buttons */}
+<div
+  style={{
+    display:'flex',
+    flexDirection:'column',
+    gap:10,
+    alignItems:'center'
+  }}
+>
+  <button
+    onClick={()=>router.push('/portal')}
+    style={{
+      padding:'11px 28px',
+      background:'#2D6A4F',
+      color:'white',
+      border:'none',
+      borderRadius:10,
+      fontSize:14,
+      cursor:'pointer'
+    }}
+  >
+    دخول بوابة العميل
+  </button>
+
+  <button
+    onClick={()=>document.getElementById('alerts')?.scrollIntoView({behavior:'smooth'})}
+    style={{
+      padding:'11px 28px',
+      background:'transparent',
+      color:'#2D6A4F',
+      border:'1px solid #2D6A4F',
+      borderRadius:10,
+      fontSize:14,
+      cursor:'pointer'
+    }}
+  >
+    اكتشف الخدمات
+  </button>
+</div>
       </div>
 
       <div style={{height:.5,background:'#E4E0DA',margin:'0 20px'}}/>
@@ -306,11 +329,17 @@ export default function HomePage(){
             </div>
             <div style={{padding:'1.2rem 1.4rem',fontSize:13,lineHeight:1.9,color:'#5F6B5F'}} dangerouslySetInnerHTML={{__html:modal.body}}/>
             <div style={{padding:'.8rem 1.4rem',borderTop:'.5px solid #E4E0DA',display:'flex',gap:6,flexWrap:'wrap'}}>
-              {modal.keywords.map(k=><span key={k} style={{fontSize:11,padding:'3px 10px',borderRadius:10,background:'#F8F5F0',color:'#5F6B5F'}}>#{k}</span>)}
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
+              {modal.keywords.map(k => (
+  <span
+    key={k}
+    style={{
+      fontSize:11,
+      padding:'3px 10px',
+      borderRadius:10,
+      background:'#F8F5F0',
+      color:'#5F6B5F'
+    }}
+  >
+    #{k}
+  </span>
+))}
