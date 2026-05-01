@@ -109,7 +109,12 @@ export default function HomePage(){
         <div style={{fontSize:38,fontWeight:600,lineHeight:1.25,marginBottom:6}}>شريكك الزراعي الموثوق</div>
         <div style={{fontSize:15,color:'#5F6B5F',fontStyle:'italic',marginBottom:'1.2rem'}}>Votre Partenaire Agricole de Confiance</div>
         <div style={{fontSize:14,color:'#5F6B5F',lineHeight:1.8,marginBottom:'2rem',maxWidth:520}}>مستلزمات زراعية، استشارات متخصصة، ومتابعة فردية لكل عميل — كل ما تحتاجه في مكان واحد.</div>
-        <div style={{display:'flex',gap:10,flexWrap:'wrap'}}>
+        <div style={{
+  display:'flex',
+  flexDirection:'column',
+  gap:10,
+  alignItems:'center'
+}}>
           <button onClick={()=>router.push('/portal')} style={{padding:'11px 28px',background:'#2D6A4F',color:'white',border:'none',borderRadius:10,fontSize:14,cursor:'pointer'}}>دخول بوابة العميل</button>
           <button onClick={()=>document.getElementById('alerts')?.scrollIntoView({behavior:'smooth'})} style={{padding:'11px 28px',background:'transparent',color:'#2D6A4F',border:'1px solid #2D6A4F',borderRadius:10,fontSize:14,cursor:'pointer'}}>اكتشف الخدمات</button>
         </div>
