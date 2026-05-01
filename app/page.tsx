@@ -115,8 +115,12 @@ export default function HomePage(){
   gap:10,
   alignItems:'center'
 }}>
-          <button onClick={()=>router.push('/portal')} style={{padding:'11px 28px',background:'#2D6A4F',color:'white',border:'none',borderRadius:10,fontSize:14,cursor:'pointer'}}>دخول بوابة العميل</button>
-          <button onClick={()=>document.getElementById('alerts')?.scrollIntoView({behavior:'smooth'})} style={{padding:'11px 28px',background:'transparent',color:'#2D6A4F',border:'1px solid #2D6A4F',borderRadius:10,fontSize:14,cursor:'pointer'}}>اكتشف الخدمات</button>
+          <button onClick={()=>router.push('/portal')} style={{padding:'11px 28px',background:'#2D6A4F',color:'white',border:'none',borderRadius:10,fontSize:14,cursor:'pointer'}}>
+  دخول بوابة العميل
+</button>
+          <button onClick={()=>document.getElementById('alerts')?.scrollIntoView({behavior:'smooth'})} style={{padding:'11px 28px',background:'transparent',color:'#2D6A4F',border:'1px solid #2D6A4F',borderRadius:10,fontSize:14,cursor:'pointer'}}>
+  اكتشف الخدمات
+</button>
         </div>
       </div>
 
