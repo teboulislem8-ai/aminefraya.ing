@@ -466,6 +466,19 @@ date: new Date().toLocaleDateString()
   overflowX: 'hidden',
   boxSizing: 'border-box'
 }}>
+      <style>{`
+        .dash-sidebar{width:190px;flex-shrink:0;border-left:.5px solid #E4E0DA;background:#fff;padding:1rem 0}
+        .dash-main{flex:1;padding:1.5rem;overflow-y:auto;min-width:0}
+        .dash-bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:.5px solid #E4E0DA;z-index:200;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px 4px 10px;gap:0}
+        @media(max-width:640px){
+          .dash-sidebar{display:none!important}
+          .dash-main{padding:.9rem!important;padding-bottom:76px!important}
+          .dash-bottom-nav{display:flex!important}
+          .grid-4{grid-template-columns:repeat(2,1fr)!important}
+          .grid-3{grid-template-columns:repeat(3,1fr)!important}
+          .grid-2{grid-template-columns:1fr!important}
+        }
+      `}</style>
       {/* Nav */}
       <nav style={{
   display: 'flex',
@@ -487,9 +500,9 @@ date: new Date().toLocaleDateString()
         </div>
       </nav>
 
-      <div style={{ display: 'flex', minHeight: 'calc(100vh - 53px)' }}>
+      <div className="dash-layout" style={{ display: 'flex', minHeight: 'calc(100vh - 53px)' }}>
         {/* Sidebar */}
-        <div style={{ width: 190, flexShrink: 0, borderLeft: '.5px solid #E4E0DA', background: '#fff', padding: '1rem 0' }}>
+        <div className="dash-sidebar">
           {PANELS.map(p => (
             <div key={p.id} onClick={() => setPanel(p.id)} style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 16px', fontSize: 13, cursor: 'pointer', color: panel === p.id ? '#2D6A4F' : '#5F6B5F', borderRight: panel === p.id ? '3px solid #2D6A4F' : '3px solid transparent', background: panel === p.id ? '#EAF3DE' : 'transparent' }}>
               <span>{p.icon}</span>
@@ -500,13 +513,13 @@ date: new Date().toLocaleDateString()
         </div>
 
         {/* Main */}
-        <div style={{ flex: 1, padding: '1.5rem', overflowY: 'auto' }}>
+        <div className="dash-main">
 
           {/* OVERVIEW */}
           {panel === 'overview' && (
             <div>
               <div style={{ fontSize: 15, fontWeight: 600, marginBottom: '1.2rem' }}>نظرة عامة</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 10, marginBottom: '1.5rem' }}>
+              <div className="grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 10, marginBottom: '1.5rem' }}>
                 {[{ n: clients.filter(c => c.status === 'active').length, l: 'عملاء نشطون' }, { n: posts.length, l: 'منشور' }, { n: checkItems.filter(i => !i.done).length, l: 'مهام معلّقة' }, { n: orders.filter(o => o.date.startsWith(new Date().toISOString().slice(0, 7))).length, l: 'طلبات الشهر' }].map((s, i) => (
                   <div key={i} style={{ background: '#F8F5F0', borderRadius: 10, padding: '.8rem', textAlign: 'center' }}><div style={{ fontSize: 22, fontWeight: 600, color: '#2D6A4F' }}>{s.n}</div><div style={{ fontSize: 11, color: '#9CA89C', marginTop: 3 }}>{s.l}</div></div>
                 ))}
@@ -703,7 +716,7 @@ date: new Date().toLocaleDateString()
               <div style={{ fontSize: 15, fontWeight: 600, marginBottom: '1.2rem' }}>التقويم</div>
               <div style={B}>
                 <div style={{ fontSize: 13, fontWeight: 600, marginBottom: '.8rem' }}>إضافة موعد</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: '.8rem' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: '.8rem' }}>
                   <div><label className="f-label">العميل</label><select value={evtClient} onChange={e => setEvtClient(e.target.value)} style={FI}><option value="">اختر عميل</option>{clients.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
                   <div><label className="f-label">نوع الموعد</label><select value={evtType} onChange={e => setEvtType(e.target.value)} style={FI}><option value="visit">زيارة ميدانية</option><option value="spray">موعد رش</option><option value="delivery">تسليم طلب</option><option value="followup">متابعة</option></select></div>
                   <div><label className="f-label">التاريخ</label><input type="date" value={evtDate} onChange={e => setEvtDate(e.target.value)} style={FI} /></div>
@@ -745,7 +758,7 @@ date: new Date().toLocaleDateString()
           {panel === 'orders' && (
             <div>
               <div style={{ fontSize: 15, fontWeight: 600, marginBottom: '1rem' }}>سجل الطلبات</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8, marginBottom: '1rem' }}>
+              <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8, marginBottom: '1rem' }}>
                 {[{ n: orders.length, l: 'إجمالي الطلبات' }, { n: orders.filter(o => o.date.startsWith(new Date().toISOString().slice(0, 7))).length, l: 'هذا الشهر' }, { n: orders.reduce((s, o) => s + Number(o.price), 0).toLocaleString(), l: 'الإيرادات (دج)' }].map((s, i) => (
                   <div key={i} style={{ background: '#F8F5F0', borderRadius: 10, padding: '.8rem', textAlign: 'center' }}><div style={{ fontSize: 18, fontWeight: 600, color: '#2D6A4F' }}>{s.n}</div><div style={{ fontSize: 10, color: '#9CA89C', marginTop: 2 }}>{s.l}</div></div>
                 ))}
@@ -786,7 +799,7 @@ date: new Date().toLocaleDateString()
               <div style={{ fontSize: 15, fontWeight: 600, marginBottom: '1.2rem' }}>إدارة المقالات</div>
               <div style={B}>
                 <div style={{ fontSize: 13, fontWeight: 600, marginBottom: '.9rem', paddingBottom: '.6rem', borderBottom: '.5px solid #E4E0DA' }}>نشر مقالة جديدة</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: '.8rem' }}>
+                <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: '.8rem' }}>
                   <div><label className="f-label">عنوان المقالة *</label><input value={artTitle} onChange={e => setArtTitle(e.target.value)} placeholder="عنوان المقالة..." style={FI} /></div>
                   <div><label className="f-label">التصنيف</label><select value={artCat} onChange={e => setArtCat(e.target.value)} style={FI}>{Object.keys(CAT_STYLES).map(c => <option key={c} value={c}>{c}</option>)}</select></div>
                 </div>
@@ -830,6 +843,22 @@ date: new Date().toLocaleDateString()
             </div>
           )}
 
+        </div>
+
+        {/* Mobile bottom nav */}
+        <div className="dash-bottom-nav">
+          {PANELS.map(p => (
+            <button key={p.id} onClick={() => setPanel(p.id)} style={{
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+              gap: 2, minWidth: 56, padding: '4px 6px', border: 'none', background: 'transparent',
+              cursor: 'pointer', position: 'relative', flexShrink: 0
+            }}>
+              <span style={{ fontSize: 18, lineHeight: 1 }}>{p.icon}</span>
+              <span style={{ fontSize: 9, color: panel === p.id ? '#2D6A4F' : '#9CA89C', fontWeight: panel === p.id ? 700 : 400, whiteSpace: 'nowrap' }}>{p.label}</span>
+              {panel === p.id && <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: 24, height: 2, background: '#2D6A4F', borderRadius: 2 }} />}
+              {p.badge && p.badge > 0 ? <div style={{ position: 'absolute', top: 2, right: 6, width: 14, height: 14, background: '#E05A2B', color: 'white', borderRadius: '50%', fontSize: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{p.badge}</div> : null}
+            </button>
+          ))}
         </div>
       </div>
 
