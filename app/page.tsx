@@ -99,7 +99,12 @@ export default function HomePage(){
       </nav>
 
       {/* Hero */}
-      <div style={{maxWidth:1100,margin:'0 auto',padding:'4rem 20px 3rem'}}>
+      <div style={{
+  maxWidth:1100,
+  margin:'0 auto',
+  padding:'2rem 16px',
+  textAlign:'center'
+}}>
         <div style={{fontSize:11,letterSpacing:'.12em',color:'#C9963A',fontWeight:600,textTransform:'uppercase',marginBottom:'1rem'}}>زراعة ذكية · شرق الجزائر</div>
         <div style={{fontSize:38,fontWeight:600,lineHeight:1.25,marginBottom:6}}>شريكك الزراعي الموثوق</div>
         <div style={{fontSize:15,color:'#5F6B5F',fontStyle:'italic',marginBottom:'1.2rem'}}>Votre Partenaire Agricole de Confiance</div>
