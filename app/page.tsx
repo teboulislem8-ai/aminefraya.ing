@@ -77,6 +77,9 @@ export default function HomePage(){
 
   return(
     <div>
+      {/* FIX 2 — hide nav links on mobile */}
+      <style>{`@media(max-width:640px){.nav-links{display:none!important}}`}</style>
+
       {/* Ticker */}
       <div style={{background:'#1A2E1A',color:'white',padding:'8px 20px',display:'flex',alignItems:'center',gap:10,fontSize:12}}>
         <div style={{width:6,height:6,borderRadius:'50%',background:'#E05A2B',flexShrink:0,animation:'blink 1.5s infinite'}}/>
@@ -87,7 +90,8 @@ export default function HomePage(){
       {/* Navbar */}
       <nav style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'13px 20px',borderBottom:'.5px solid #E4E0DA',background:'#fff',position:'sticky',top:0,zIndex:100}}>
         <div style={{display:'flex',alignItems:'center',gap:10,cursor:'pointer'}} onClick={()=>router.push('/')}><Logo/><span style={{fontSize:15,fontWeight:600,color:'#2D6A4F'}}>aminefraya.ing</span></div>
-        <div style={{display:'flex',gap:22,fontSize:13}}>
+        {/* FIX 2 — className="nav-links" collapses this on mobile */}
+        <div className="nav-links" style={{display:'flex',gap:22,fontSize:13}}>
           <a href="#alerts" style={{color:'#5F6B5F'}}>التنبيهات</a>
           <a href="#articles" style={{color:'#5F6B5F'}}>الأبحاث</a>
           <a href="#contact" style={{color:'#5F6B5F'}}>تواصل معنا</a>
@@ -108,7 +112,8 @@ export default function HomePage(){
         <div style={{fontSize:11,letterSpacing:'.12em',color:'#C9963A',fontWeight:600,textTransform:'uppercase',marginBottom:'1rem'}}>زراعة ذكية · شرق الجزائر</div>
         <div style={{fontSize:38,fontWeight:600,lineHeight:1.25,marginBottom:6}}>شريكك الزراعي الموثوق</div>
         <div style={{fontSize:15,color:'#5F6B5F',fontStyle:'italic',marginBottom:'1.2rem'}}>Votre Partenaire Agricole de Confiance</div>
-        <div style={{fontSize:14,color:'#5F6B5F',lineHeight:1.8,marginBottom:'2rem',maxWidth:520}}>مستلزمات زراعية، استشارات متخصصة، ومتابعة فردية لكل عميل — كل ما تحتاجه في مكان واحد.</div>
+        {/* FIX 1 — added margin:'0 auto 2rem' so the block centers on desktop */}
+        <div style={{fontSize:14,color:'#5F6B5F',lineHeight:1.8,maxWidth:520,margin:'0 auto 2rem'}}>مستلزمات زراعية، استشارات متخصصة، ومتابعة فردية لكل عميل — كل ما تحتاجه في مكان واحد.</div>
         <div style={{
   display:'flex',
   flexDirection:'column',
