@@ -85,14 +85,38 @@ export default function HomePage(){
       </div>
 
       {/* Navbar */}
-      <nav style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'13px 20px',borderBottom:'.5px solid #E4E0DA',background:'#fff',position:'sticky',top:0,zIndex:100}}>
+      <nav style={{
+  display:'flex',
+  alignItems:'center',
+  justifyContent:'space-between',
+  padding:'13px 20px',
+  borderBottom:'.5px solid #E4E0DA',
+  background:'#fff',
+  position:'sticky',
+  top:0,
+  zIndex:100,
+  flexWrap:'wrap' // ✅ IMPORTANT
+}}>
         <div style={{display:'flex',alignItems:'center',gap:10,cursor:'pointer'}} onClick={()=>router.push('/')}><Logo/><span style={{fontSize:15,fontWeight:600,color:'#2D6A4F'}}>aminefraya.ing</span></div>
-        <div style={{display:'flex',gap:22,fontSize:13}}>
+        <div style={{
+  display:'flex',
+  gap:14,
+  fontSize:12,
+  flexWrap:'wrap',
+  justifyContent:'center',
+  width:'100%'
+}}>
           <a href="#alerts" style={{color:'#5F6B5F'}}>التنبيهات</a>
           <a href="#articles" style={{color:'#5F6B5F'}}>الأبحاث</a>
           <a href="#contact" style={{color:'#5F6B5F'}}>تواصل معنا</a>
         </div>
-        <div style={{display:'flex',gap:8}}>
+        <div style={{
+  display:'flex',
+  gap:8,
+  width:'100%',
+  justifyContent:'center',
+  marginTop:8
+}}>
           <button onClick={()=>router.push('/portal')} style={{fontSize:12,padding:'6px 14px',border:'.5px solid #D0CCC6',borderRadius:20,background:'transparent',color:'#5F6B5F',cursor:'pointer'}}>بوابة العميل</button>
           <button onClick={()=>router.push('/dashboard')} style={{fontSize:12,padding:'6px 16px',background:'#2D6A4F',color:'white',border:'none',borderRadius:20,cursor:'pointer'}}>لوحة المدير</button>
         </div>
@@ -108,7 +132,16 @@ export default function HomePage(){
         <div style={{fontSize:11,letterSpacing:'.12em',color:'#C9963A',fontWeight:600,textTransform:'uppercase',marginBottom:'1rem'}}>زراعة ذكية · شرق الجزائر</div>
         <div style={{fontSize:38,fontWeight:600,lineHeight:1.25,marginBottom:6}}>شريكك الزراعي الموثوق</div>
         <div style={{fontSize:15,color:'#5F6B5F',fontStyle:'italic',marginBottom:'1.2rem'}}>Votre Partenaire Agricole de Confiance</div>
-        <div style={{fontSize:14,color:'#5F6B5F',lineHeight:1.8,marginBottom:'2rem',maxWidth:520}}>مستلزمات زراعية، استشارات متخصصة، ومتابعة فردية لكل عميل — كل ما تحتاجه في مكان واحد.</div>
+        <div style={{
+  fontSize:14,
+  color:'#5F6B5F',
+  lineHeight:1.8,
+  marginBottom:'2rem',
+  maxWidth:520,
+  marginLeft:'auto',
+  marginRight:'auto',
+  textAlign:'center'
+}}>
         <div style={{
   display:'flex',
   flexDirection:'column',
