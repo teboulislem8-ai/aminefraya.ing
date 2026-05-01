@@ -182,7 +182,7 @@ export default function HomePage(){
         <div className="section-sep">معرفة علمية</div>
         <div style={{fontSize:22,fontWeight:600,marginBottom:4}}>الأبحاث العلمية الزراعية</div>
         <div style={{fontSize:13,color:'#5F6B5F',marginBottom:'1.5rem'}}>ملخصات علمية موثقة — تُضاف وتُحدَّث من لوحة تحكم المدير</div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:8,marginBottom:'1.5rem'}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit, minmax(120px, 1fr))',gap:8,marginBottom:'1.5rem'}}>
           {[{n:articles.length,l:'مقالة منشورة'},{n:4,l:'تصنيف'},{n:new Set(articles.flatMap(a=>a.keywords)).size,l:'كلمة مفتاحية SEO'}].map((s,i)=>(
             <div key={i} style={{background:'#F8F5F0',borderRadius:10,padding:'.8rem',textAlign:'center'}}><div style={{fontSize:22,fontWeight:600,color:'#2D6A4F'}}>{s.n}</div><div style={{fontSize:10,color:'#9CA89C',marginTop:3}}>{s.l}</div></div>
           ))}
