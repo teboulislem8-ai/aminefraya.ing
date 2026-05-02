@@ -121,7 +121,7 @@ const [newCode, setNewCode] = useState('')
 
   const login = async () => {
     const s = await getOwnerSettings()
-    if (s && loginEmail === s.email && loginPw === s.password) {
+    if (s && loginEmail.trim() === s.email.trim() && loginPw.trim() === s.password.trim()) {
       setSettings(s); setAuthed(true); setLoginErr(false)
       if (clients.length === 0) loadAll()
     } else { setLoginErr(true) }
