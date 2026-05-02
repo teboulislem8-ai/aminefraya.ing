@@ -120,12 +120,16 @@ const [newCode, setNewCode] = useState('')
   }, [])
 
   const login = async () => {
-    const s = await getOwnerSettings()
-    if (s && loginEmail.trim() === s.email.trim() && loginPw.trim() === s.password.trim()) {
-      setSettings(s); setAuthed(true); setLoginErr(false)
-      if (clients.length === 0) loadAll()
-    } else { setLoginErr(true) }
-  }
+  const s = await getOwnerSettings()
+  const cleanEmail = loginEmail.replace(/[^\x20-\x7E]/g, '').trim()
+  const cleanPw = loginPw.replace(/[^\x20-\x7E]/g, '').trim()
+  const storedEmail = s?.email.replace(/[^\x20-\x7E]/g, '').trim()
+  const storedPw = s?.password.replace(/[^\x20-\x7E]/g, '').trim()
+  if (s && cleanEmail === storedEmail && cleanPw === storedPw) {
+    setSettings(s); setAuthed(true); setLoginErr(false)
+    if (clients.length === 0) loadAll()
+  } else { setLoginErr(true) }
+}
 
   useEffect(() => { if (authed) loadAll() }, [authed, loadAll])
 
