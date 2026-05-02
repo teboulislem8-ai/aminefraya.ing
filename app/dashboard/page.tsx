@@ -442,7 +442,7 @@ date: new Date().toLocaleDateString()
         <div style={{ fontSize: 18, fontWeight: 600, textAlign: 'center', marginBottom: 4 }}>لوحة تحكم المدير</div>
         <div style={{ fontSize: 12, color: '#5F6B5F', textAlign: 'center', marginBottom: '1.8rem', lineHeight: 1.6 }}>للوصول المخصص لصاحب العمل فقط</div>
         <div style={{ marginBottom: '1rem' }}><label className="f-label">البريد الإلكتروني</label><input type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} placeholder="example@gmail.com" style={{ ...FI, direction: 'ltr', textAlign: 'right' }} /></div>
-        <div style={{ marginBottom: '1rem' }}><label className="f-label">كلمة المرور</label><input type="password" value={loginPw} onChange={e => setLoginPw(e.target.value)} placeholder="••••••••" onKeyDown={e => { if (e.key === 'Enter') login() }} style={{ ...FI, direction: 'ltr', textAlign: 'right' }} /></div>
+        <div style={{ marginBottom: '1rem' }}><label className="f-label">كلمة المرور</label><input type="password" value={loginPw} onChange={e => setLoginPw(e.target.value)} placeholder="••••••••" onKeyDown={e => { if (e.key === 'Enter') login() }} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck={false} style={{ ...FI, direction: 'ltr', textAlign: 'right' }} /></div>
         <button onClick={login} style={{ width: '100%', padding: 11, background: '#2D6A4F', color: 'white', border: 'none', borderRadius: 10, fontSize: 14, cursor: 'pointer' }}>دخول ←</button>
         {loginErr && <div style={{ fontSize: 12, color: '#A32D2D', background: '#FCEBEB', border: '.5px solid #F09595', borderRadius: 6, padding: '8px 12px', marginTop: '.8rem', textAlign: 'center' }}>بريد إلكتروني أو كلمة مرور خاطئة</div>}
       </div>
